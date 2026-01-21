@@ -17,7 +17,7 @@ tenacity>=8.0.0                  # Retry with exponential backoff
 python-dotenv>=0.19.0            # Environment variable management
 
 # File Processing
-openpyxl>=3.0.10                 # Excel file operations
+openpyxl>=3.0.10                 # Excel file reading
 xlsxwriter>=3.0.3                # Excel file writing with formatting
 
 # Testing Framework
@@ -26,6 +26,5 @@ pytest-cov>=4.0.0                # Coverage reporting
 pytest-mock>=3.10.0              # Mocking utilities
 
 # Development Tools
-black>=22.0.0                    # Code formatting
-flake8>=5.0.0                    # Code linting
-mypy>=0.991                      # Type checking
+ruff>=0.1.0                      # Linting and formatting (replaces black, isort, flake8)
+mypy>=1.0.0                      # Type checking

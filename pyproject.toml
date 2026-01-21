@@ -3,36 +3,69 @@ requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "oob-python-template"
+name = "amazon-buybox-analyzer"
 version = "1.0.0"
-description = "Object-Oriented Base Python Project Template for ETL and Automation"
+description = "Amazon Buy Box Analyzer using SP-API"
 readme = "README.md"
 requires-python = ">=3.8"
+license = {text = "MIT"}
+dependencies = [
+    "python-amazon-sp-api>=1.0.0",
+    "pandas>=1.5.0",
+    "xlsxwriter>=3.0.0",
+    "python-dotenv>=0.19.0",
+    "tenacity>=8.0.0",
+]
 
-[tool.black]
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+
+# Ruff - Linting and Formatting (replaces Black, isort, Flake8)
+[tool.ruff]
 line-length = 100
-target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-  # Directories
-  \.git
-  | \.venv
-  | venv
-  | __pycache__
-  | \.pytest_cache
-  | \.mypy_cache
-  | logs
-)/
-'''
+target-version = "py38"
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "logs",
+]
 
-[tool.isort]
-profile = "black"
-line_length = 100
-skip_gitignore = true
-known_first_party = ["scripts", "utils", "tools", "main"]
-sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "SIM",    # flake8-simplify
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # function call in default argument
+]
 
+[tool.ruff.lint.isort]
+known-first-party = ["scripts", "utils", "tools", "main", "config"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Mypy - Type Checking
 [tool.mypy]
 python_version = "3.8"
 warn_return_any = true
@@ -58,6 +91,7 @@ module = [
 ]
 ignore_missing_imports = true
 
+# Pytest - Testing
 [tool.pytest.ini_options]
 pythonpath = "."
 testpaths = ["tests"]
@@ -69,19 +103,15 @@ addopts = [
     "--tb=short",
     "--strict-markers",
     "--disable-warnings",
-    "--cov=scripts",
-    "--cov=utils",
-    "--cov-report=term-missing",
-    "--cov-report=html",
 ]
 markers = [
     "unit: Unit tests",
     "integration: Integration tests",
     "slow: Tests that take longer to run",
-    "db: Tests that require database connection",
-    "api: Tests that require API access",
+    "api: Tests that require SP-API access",
 ]
 
+# Coverage - Test Coverage Reporting
 [tool.coverage.run]
 source = ["scripts", "utils", "tools"]
 omit = [
