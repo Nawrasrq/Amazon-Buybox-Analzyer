@@ -1,0 +1,25 @@
+# Ignore potential venv and env files
+venv
+.venv
+.env
+
+# Ignore potential pycache files
+__pycache__
+.pytest_cache
+.coverage
+
+# Ignore all log files
+*.log
+*.xlsx
+*.xls
+*.csv
+*.json
+*.txt
+*.pdf
+*.docx
+*.doc
+*.pptx
+
+# Except those specified
+!requirements.txt
+!/.vscode/*.json
